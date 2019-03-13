@@ -1,11 +1,11 @@
-package com.boss.cuncis.bukatoko;
+package com.boss.cuncis.bukatoko.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.boss.cuncis.bukatoko.R;
 import com.boss.cuncis.bukatoko.adapter.ProductAdapter;
 import com.boss.cuncis.bukatoko.data.model.Product;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
@@ -108,8 +109,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
     }
@@ -187,7 +187,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_profil) {
             Toast.makeText(this, "Profil", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_logout) {
-            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, SignupActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

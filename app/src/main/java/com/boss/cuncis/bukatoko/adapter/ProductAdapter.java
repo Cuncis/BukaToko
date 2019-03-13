@@ -1,6 +1,7 @@
 package com.boss.cuncis.bukatoko.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.boss.cuncis.bukatoko.R;
+import com.boss.cuncis.bukatoko.activity.DetailActivity;
+import com.boss.cuncis.bukatoko.activity.MainActivity;
 import com.boss.cuncis.bukatoko.data.model.Product;
 import com.boss.cuncis.bukatoko.utils.Converter;
 import com.bumptech.glide.Glide;
@@ -38,7 +41,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductHolder holder, int i) {
+    public void onBindViewHolder(@NonNull ProductHolder holder, final int i) {
         holder.tvName.setText(products.get(i).getProduct());
         holder.tvPrice.setText("IDR " + Converter.rupiah(products.get(i).getPrice()));
 
@@ -53,6 +56,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
                 .load(products.get(i).getImage())
                 .apply(options)
                 .into(holder.imgProduct);
+
+        holder.imgProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("PRODUCT_ID", products.get(i).getId());
+                intent.putExtra("PRODUCT_IMAGE", products.get(i).getImage());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
