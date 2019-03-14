@@ -11,8 +11,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.boss.cuncis.bukatoko.R;
+import com.boss.cuncis.bukatoko.data.model.User;
+import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
+import com.boss.cuncis.bukatoko.data.retrofit.ApiInterface;
 import com.boss.cuncis.bukatoko.utils.Converter;
 import com.xwray.passwordview.PasswordView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +49,7 @@ public class SigninFragment extends Fragment {
             public void onClick(View view) {
                 if (etEmail.length()>0 && etPassword.length()>0) {
                     if (Converter.isValidEmailId(etEmail.getText().toString())) {
-                        auth();
+                        auth(etEmail.getText().toString(), etPassword.getText().toString());
                     } else {
                         Toast.makeText(getContext(), "Isi format email dengan benar!", Toast.LENGTH_SHORT).show();
                     }
@@ -55,8 +62,25 @@ public class SigninFragment extends Fragment {
         return view;
     }
 
-    private void auth() {
-        Toast.makeText(getContext(), "Berhasil", Toast.LENGTH_SHORT).show();
+    private void auth(String email, String password) {
+        ApiInterface apiInterface = new ApiClient().getClient().create(ApiInterface.class);
+        Call<User> call = apiInterface.authLogin(email, password);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User.Data data = response.body().getData();
+                    Toast.makeText(getContext(), "" + data.getName(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "" + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

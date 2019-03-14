@@ -12,7 +12,7 @@ import com.boss.cuncis.bukatoko.fragment.SignupFragment;
 
 public class SignupActivity extends AppCompatActivity {
 
-    TabLayout tabLayout;
+    public static TabLayout tabLayout;
     ViewPager viewPager;
 
     @Override
