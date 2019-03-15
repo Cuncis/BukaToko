@@ -17,13 +17,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.boss.cuncis.bukatoko.App;
 import com.boss.cuncis.bukatoko.R;
 import com.boss.cuncis.bukatoko.adapter.ProductAdapter;
 import com.boss.cuncis.bukatoko.data.model.Product;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiInterface;
+import com.boss.cuncis.bukatoko.utils.AuthState;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.List;
@@ -34,12 +37,14 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String TAG = "MainLog";
+    private static final String TAG = "_mainLog";
 
     MaterialSearchView searchView;
     Toolbar toolbar;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+//    ProgressBar progressBar;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,11 @@ public class MainActivity extends AppCompatActivity
         searchProduct();
         floatingButton();
         navigationDrawer();
+        initRecycler();
+    }
 
+    private void initRecycler() {
+//        progressBar = findViewById(R.id.progressbar);
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -63,17 +72,17 @@ public class MainActivity extends AppCompatActivity
                 getProducts();
             }
         });
-
-        getProducts();
     }
 
     private void getProducts() {
+//        progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(true);
         ApiInterface apiInterface = new ApiClient().getClient().create(ApiInterface.class);
         Call<Product> call = apiInterface.getProducts();
         call.enqueue(new Callback<Product>() {
             @Override
             public void onResponse(Call<Product> call, Response<Product> response) {
+//                progressBar.setVisibility(View.GONE);
                 Product product = response.body();
                 List<Product.Data> products = product.getProducts();
 
@@ -88,7 +97,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
-
+//                progressBar.setVisibility(View.GONE);
+                Toast.makeText(MainActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -102,6 +112,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        menu = navigationView.getMenu();
     }
 
     private void floatingButton() {
@@ -144,6 +156,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {     // apabila ketika kita balik ke main, dan ada produk baru update
+        super.onResume();           // maka kita akan mengambil semua produk tsb.
+        getProducts();
+
+        if (menu != null) {
+            if (App.prefsManager.isLoggedIn()) {
+                AuthState.isLoggedIn(menu);     // menampilkan drawer yg terhidden
+            } else {
+                AuthState.isLoggedOut(menu);    // menyembunyikan drawer
+            }
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -180,15 +206,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_notif) {
+        if (id == R.id.nav_login) {
+            startActivity(new Intent(MainActivity.this, SignupActivity.class));
+        } else if (id == R.id.nav_notif) {
             Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_transaski) {
             Toast.makeText(this, "Transaksi", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_profil) {
-            Toast.makeText(this, "Profil", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         } else if (id == R.id.nav_logout) {
-//            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MainActivity.this, SignupActivity.class));
+            App.prefsManager.logoutUser();
+            AuthState.isLoggedOut(menu);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

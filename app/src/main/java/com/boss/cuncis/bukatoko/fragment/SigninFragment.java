@@ -3,6 +3,7 @@ package com.boss.cuncis.bukatoko.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.boss.cuncis.bukatoko.App;
 import com.boss.cuncis.bukatoko.R;
 import com.boss.cuncis.bukatoko.data.model.User;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
@@ -33,7 +35,6 @@ public class SigninFragment extends Fragment {
     public SigninFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +63,7 @@ public class SigninFragment extends Fragment {
         return view;
     }
 
-    private void auth(String email, String password) {
+    private void auth(String email, final String password) {
         ApiInterface apiInterface = new ApiClient().getClient().create(ApiInterface.class);
         Call<User> call = apiInterface.authLogin(email, password);
         call.enqueue(new Callback<User>() {
@@ -71,6 +72,11 @@ public class SigninFragment extends Fragment {
                 if (response.isSuccessful()) {
                     User.Data data = response.body().getData();
                     Toast.makeText(getContext(), "" + data.getName(), Toast.LENGTH_SHORT).show();
+
+                    App.prefsManager.createLoginSession(String.valueOf(data.getId()), data.getName(),
+                            data.getEmail(), password);
+
+                    getActivity().finish();
                 } else {
                     Toast.makeText(getContext(), "" + response.message(), Toast.LENGTH_SHORT).show();
                 }

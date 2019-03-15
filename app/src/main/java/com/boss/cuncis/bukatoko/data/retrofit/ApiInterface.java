@@ -30,6 +30,13 @@ public interface ApiInterface {
                             @Field("email") String email,
                             @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("auth/update/{id}")
+    Call<User> updateUser(@Path("id") String id,
+                          @Field("name") String name,
+                          @Field("email") String email,
+                          @Field("password") String password);
+
 }
 
 

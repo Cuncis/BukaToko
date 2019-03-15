@@ -15,5 +15,4 @@ public class ApiClient {
 
         return retrofit;
     }
-    // KURANG PRODUK TIDAK MUNCUL
 }
