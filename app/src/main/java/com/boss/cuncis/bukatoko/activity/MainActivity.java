@@ -26,6 +26,7 @@ import com.boss.cuncis.bukatoko.adapter.ProductAdapter;
 import com.boss.cuncis.bukatoko.data.model.Product;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiInterface;
+import com.boss.cuncis.bukatoko.dialog.LoginDialog;
 import com.boss.cuncis.bukatoko.utils.AuthState;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
-//    ProgressBar progressBar;
     Menu menu;
 
     @Override
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initRecycler() {
-//        progressBar = findViewById(R.id.progressbar);
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -75,14 +74,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getProducts() {
-//        progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(true);
         ApiInterface apiInterface = new ApiClient().getClient().create(ApiInterface.class);
         Call<Product> call = apiInterface.getProducts();
         call.enqueue(new Callback<Product>() {
             @Override
             public void onResponse(Call<Product> call, Response<Product> response) {
-//                progressBar.setVisibility(View.GONE);
                 Product product = response.body();
                 List<Product.Data> products = product.getProducts();
 
@@ -194,7 +191,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_cart) {
-            Toast.makeText(this, "Cart", Toast.LENGTH_SHORT).show();
+            if (App.prefsManager.isLoggedIn()) {
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
+            } else {
+                new LoginDialog().showLoginDialog(MainActivity.this, menu);
+            }
             return true;
         }
 

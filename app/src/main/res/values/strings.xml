@@ -117,4 +117,9 @@
     <string name="password_baru">Password baru</string>
     <string name="konfirmasi_password">Konfirmasi password</string>
     <string name="simpan">Simpan</string>
+    <string name="berhasil_masuk_keranjang">Berhasil masuk keranjang</string>
+    <string name="lanjut_pembayaran">Lanjut Pembayaran</string>
+    <string name="lihat_keranjang">Lihat Keranjang</string>
+    <string name="bayar_sekarang">Bayar Sekarang</string>
+    <string name="pengguna_baru">Pengguna baru?</string>
 </resources>

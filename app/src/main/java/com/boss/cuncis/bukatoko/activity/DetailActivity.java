@@ -10,10 +10,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.boss.cuncis.bukatoko.App;
 import com.boss.cuncis.bukatoko.R;
 import com.boss.cuncis.bukatoko.data.model.Detail;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiInterface;
+import com.boss.cuncis.bukatoko.dialog.CartDialog;
 import com.boss.cuncis.bukatoko.utils.Converter;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -40,6 +42,8 @@ public class DetailActivity extends AppCompatActivity implements BaseSliderView.
 
     Bundle bundle;
 
+    int detailPrice;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +55,18 @@ public class DetailActivity extends AppCompatActivity implements BaseSliderView.
         btnAddCart = findViewById(R.id.btn_add_cart);
         btnCheckout = findViewById(R.id.btn_checkout);
 
+
+
         btnAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (App.sqLiteHelper.checkExists(bundle.getInt("PRODUCT_ID")) == 0) {
+                    Long cartId = App.sqLiteHelper.addToCart(bundle.getInt("PRODUCT_ID"), tvName.getText().toString(),
+                            bundle.getString("PRODUCT_IMAGE"), detailPrice);
+                    Log.d("_logCartId", "onClick: " + String.valueOf(cartId));
+                }
 
+                new CartDialog().showCartDialog(DetailActivity.this);
             }
         });
 
@@ -66,8 +78,6 @@ public class DetailActivity extends AppCompatActivity implements BaseSliderView.
         });
 
         bundle = getIntent().getExtras();
-        Log.d("_logImageIntent", "onCreate: " + bundle.getString("PRODUCT_IMAGE"));
-
         getDetails();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,7 +98,9 @@ public class DetailActivity extends AppCompatActivity implements BaseSliderView.
             public void onResponse(Call<Detail> call, Response<Detail> response) {
                 Detail.Data data = response.body().getData();
                 tvName.setText(data.getProduct());
-                tvPrice.setText(Converter.rupiah(data.getPrice()));
+
+                detailPrice = data.getPrice();
+                tvPrice.setText("Rp " + Converter.rupiah(data.getPrice()));
 
                 if (data.getDescription() != null) {
                     tvDescription.setText(data.getDescription());
