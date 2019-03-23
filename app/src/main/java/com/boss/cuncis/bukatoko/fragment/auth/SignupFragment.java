@@ -1,4 +1,4 @@
-package com.boss.cuncis.bukatoko.fragment;
+package com.boss.cuncis.bukatoko.fragment.auth;
 
 
 import android.os.Bundle;

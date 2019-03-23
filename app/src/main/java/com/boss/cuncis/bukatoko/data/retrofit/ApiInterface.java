@@ -1,12 +1,14 @@
 package com.boss.cuncis.bukatoko.data.retrofit;
 
-import com.boss.cuncis.bukatoko.data.model.City;
-import com.boss.cuncis.bukatoko.data.model.Cost;
+import com.boss.cuncis.bukatoko.data.model.rajaongkir.City;
+import com.boss.cuncis.bukatoko.data.model.rajaongkir.Cost;
 import com.boss.cuncis.bukatoko.data.model.Detail;
 import com.boss.cuncis.bukatoko.data.model.Product;
 import com.boss.cuncis.bukatoko.data.model.User;
+import com.boss.cuncis.bukatoko.data.model.transaction.TransPost;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -39,6 +41,9 @@ public interface ApiInterface {
                           @Field("name") String name,
                           @Field("email") String email,
                           @Field("password") String password);
+
+    @POST("transaction")
+    Call<TransPost> insertTrans(@Body TransPost transPost);
 
     // Raja ongkir - end Point
 

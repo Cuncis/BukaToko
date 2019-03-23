@@ -1,5 +1,6 @@
 package com.boss.cuncis.bukatoko.dialog;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +9,7 @@ import android.view.View;
 
 import com.boss.cuncis.bukatoko.R;
 import com.boss.cuncis.bukatoko.activity.CartActivity;
+import com.boss.cuncis.bukatoko.data.Constant;
 
 public class CartDialog {
 
@@ -21,6 +23,16 @@ public class CartDialog {
             @Override
             public void onClick(View view) {
                 context.startActivity(new Intent(context, CartActivity.class));
+                ((Activity) context).finish();
+            }
+        });
+
+        view.findViewById(R.id.btn_pay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Constant.SHOP_NOW = true;
+                context.startActivity(new Intent(context, CartActivity.class));
+                ((Activity) context).finish();
             }
         });
 

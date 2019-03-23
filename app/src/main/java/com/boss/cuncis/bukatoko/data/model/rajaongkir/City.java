@@ -1,4 +1,4 @@
-package com.boss.cuncis.bukatoko.data.model;
+package com.boss.cuncis.bukatoko.data.model.rajaongkir;
 
 import com.google.gson.annotations.SerializedName;
 

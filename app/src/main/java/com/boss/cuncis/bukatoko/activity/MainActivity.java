@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_notif) {
             Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_transaski) {
-            Toast.makeText(this, "Transaksi", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, TransActivity.class));
         } else if (id == R.id.nav_profil) {
             startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         } else if (id == R.id.nav_logout) {

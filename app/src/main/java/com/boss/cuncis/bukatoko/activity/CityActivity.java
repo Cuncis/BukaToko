@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.boss.cuncis.bukatoko.R;
 import com.boss.cuncis.bukatoko.adapter.CityAdapter;
 import com.boss.cuncis.bukatoko.data.Constant;
-import com.boss.cuncis.bukatoko.data.model.City;
+import com.boss.cuncis.bukatoko.data.model.rajaongkir.City;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiInterface;
 

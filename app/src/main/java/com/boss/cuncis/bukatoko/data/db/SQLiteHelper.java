@@ -98,6 +98,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, CART_ID + "=?", new String[]{cart_id});
     }
+
+    public void clearTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+    }
 }
 
 

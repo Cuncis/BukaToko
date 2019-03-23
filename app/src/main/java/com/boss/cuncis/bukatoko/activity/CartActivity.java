@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.boss.cuncis.bukatoko.App;
 import com.boss.cuncis.bukatoko.R;
 import com.boss.cuncis.bukatoko.adapter.CartAdapter;
+import com.boss.cuncis.bukatoko.data.Constant;
 import com.boss.cuncis.bukatoko.data.model.Cart;
 
 import java.util.ArrayList;
@@ -23,14 +24,15 @@ public class CartActivity extends AppCompatActivity {
     Button btnCheckout;
     RecyclerView recyclerView;
 
-    List<Cart> cartList = new ArrayList<>();
-    CartAdapter adapter;
+    public static List<Cart> cartList = new ArrayList<>();
+    public static CartAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        cartList.clear();
         cartList.addAll(App.sqLiteHelper.myCart());
 
         tvPriceTotal = findViewById(R.id.tv_price_total);
@@ -56,6 +58,16 @@ public class CartActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (Constant.SHOP_NOW) {
+            startActivity(new Intent(this, OngkirActivity.class));
+            Constant.SHOP_NOW = false;
+        }
     }
 }
 

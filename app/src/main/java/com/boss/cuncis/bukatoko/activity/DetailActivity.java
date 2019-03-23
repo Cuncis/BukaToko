@@ -1,5 +1,6 @@
 package com.boss.cuncis.bukatoko.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.boss.cuncis.bukatoko.App;
 import com.boss.cuncis.bukatoko.R;
+import com.boss.cuncis.bukatoko.data.Constant;
 import com.boss.cuncis.bukatoko.data.model.Detail;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiInterface;
@@ -48,6 +50,7 @@ public class DetailActivity extends AppCompatActivity implements BaseSliderView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        bundle = getIntent().getExtras();
 
         tvName = findViewById(R.id.tv_name);
         tvPrice = findViewById(R.id.tv_price);
@@ -60,12 +63,7 @@ public class DetailActivity extends AppCompatActivity implements BaseSliderView.
         btnAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (App.sqLiteHelper.checkExists(bundle.getInt("PRODUCT_ID")) == 0) {
-                    Long cartId = App.sqLiteHelper.addToCart(bundle.getInt("PRODUCT_ID"), tvName.getText().toString(),
-                            bundle.getString("PRODUCT_IMAGE"), detailPrice);
-                    Log.d("_logCartId", "onClick: " + String.valueOf(cartId));
-                }
-
+                addToCart();
                 new CartDialog().showCartDialog(DetailActivity.this);
             }
         });
@@ -73,11 +71,15 @@ public class DetailActivity extends AppCompatActivity implements BaseSliderView.
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                addToCart();
 
+                Constant.SHOP_NOW = true;
+                startActivity(new Intent(DetailActivity.this, CartActivity.class));
+                finish();
             }
         });
 
-        bundle = getIntent().getExtras();
+
         getDetails();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,6 +90,14 @@ public class DetailActivity extends AppCompatActivity implements BaseSliderView.
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+    private void addToCart() {
+        if (App.sqLiteHelper.checkExists(bundle.getInt("PRODUCT_ID")) == 0) {
+            Long cartId = App.sqLiteHelper.addToCart(bundle.getInt("PRODUCT_ID"), tvName.getText().toString(),
+                    bundle.getString("PRODUCT_IMAGE"), detailPrice);
+            Log.d("_logCartId", "onClick: " + String.valueOf(cartId));
+        }
     }
 
     private void getDetails() {
