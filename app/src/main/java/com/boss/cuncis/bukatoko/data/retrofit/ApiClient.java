@@ -15,4 +15,13 @@ public class ApiClient {
 
         return retrofit;
     }
+
+    public Retrofit getClientRajaOngkir(String base_url) {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(base_url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit;
+    }
 }

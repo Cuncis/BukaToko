@@ -1,9 +1,11 @@
 package com.boss.cuncis.bukatoko.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,7 +19,7 @@ import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
 
-    TextView tvPriceTotal;
+    public static TextView tvPriceTotal;
     Button btnCheckout;
     RecyclerView recyclerView;
 
@@ -38,6 +40,13 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CartAdapter(cartList, this);
         recyclerView.setAdapter(adapter);
+
+        btnCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CartActivity.this, OngkirActivity.class));
+            }
+        });
 
         getSupportActionBar().setTitle("Keranjang");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -1,4 +1,4 @@
-package com.boss.cuncis.bukatoko.data;
+package com.boss.cuncis.bukatoko.data.db;
 
 import android.content.Context;
 import android.content.SharedPreferences;

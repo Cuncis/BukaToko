@@ -41,6 +41,26 @@
                 android:layout_marginTop="5dp"
                 android:textSize="12sp"
                 android:text="@string/lorem_ipsum"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <Spinner
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/spin_qty"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_total"
+                    android:text="@string/lorem_ipsum"
+                    android:textStyle="bold"
+                    android:textAlignment="center"/>
+            </LinearLayout>
         </LinearLayout>
 
         <ImageButton

@@ -1,4 +1,4 @@
-package com.boss.cuncis.bukatoko.data;
+package com.boss.cuncis.bukatoko.data.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -84,13 +84,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             cart.setProduct(cursor.getString(cursor.getColumnIndex(PRODUCT)));
             cart.setImage(cursor.getString(cursor.getColumnIndex(IMAGE_URL)));
             cart.setPrice(cursor.getInt(cursor.getColumnIndex(PRICE)));
-            cart.setCurr_date(cursor.getString(cursor.getColumnIndex(CURRENT_DATE)));
+//            cart.setCurr_date(cursor.getString(cursor.getColumnIndex(CURRENT_DATE)));
+            cart.setCurr_date(cursor.getString(5));
 
             Log.d("_logProductName", "myCart: " + cursor.getString(cursor.getColumnIndex(PRODUCT)));
             carts.add(cart);
         }
 
         return carts;
+    }
+
+    public void removeItem(String cart_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, CART_ID + "=?", new String[]{cart_id});
     }
 }
 
