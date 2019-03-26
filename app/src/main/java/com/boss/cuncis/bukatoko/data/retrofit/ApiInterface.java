@@ -6,6 +6,7 @@ import com.boss.cuncis.bukatoko.data.model.Detail;
 import com.boss.cuncis.bukatoko.data.model.Product;
 import com.boss.cuncis.bukatoko.data.model.User;
 import com.boss.cuncis.bukatoko.data.model.transaction.TransPost;
+import com.boss.cuncis.bukatoko.data.model.transaction.TransUser;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -44,6 +45,12 @@ public interface ApiInterface {
 
     @POST("transaction")
     Call<TransPost> insertTrans(@Body TransPost transPost);
+
+    @GET("transaction-user/{id}/unpaid")
+    Call<TransUser> getTransUnpaid(@Path("id") String id);
+
+    @GET("transaction-user/{id}/paid")
+    Call<TransUser> getTransPaid(@Path("id") String id);
 
     // Raja ongkir - end Point
 

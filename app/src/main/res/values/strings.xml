@@ -123,4 +123,5 @@
     <string name="bayar_sekarang">Bayar Sekarang</string>
     <string name="pengguna_baru">Pengguna baru?</string>
     <string name="cari_kota">Cari Kota</string>
+    <string name="no_data">Data tidak ditemukan</string>
 </resources>
