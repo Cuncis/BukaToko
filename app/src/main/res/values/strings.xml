@@ -124,4 +124,6 @@
     <string name="pengguna_baru">Pengguna baru?</string>
     <string name="cari_kota">Cari Kota</string>
     <string name="no_data">Data tidak ditemukan</string>
+    <string name="pilih_gambar">Pilih Gambar</string>
+    <string name="upload_gambar">Upload Gambar</string>
 </resources>

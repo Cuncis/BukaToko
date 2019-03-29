@@ -189,7 +189,7 @@ public class OngkirActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Cost> call, Throwable t) {
-
+                Toast.makeText(OngkirActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -214,7 +214,7 @@ public class OngkirActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<TransPost> call, Throwable t) {
-                Toast.makeText(OngkirActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(OngkirActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

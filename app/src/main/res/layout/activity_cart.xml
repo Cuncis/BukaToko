@@ -24,7 +24,7 @@
             android:id="@+id/tv_price_total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TOTAL: Rp. 500.000"
+            android:text="TOTAL: Rp. 0"
             android:gravity="center"
             android:textSize="18sp"
             android:textStyle="bold"

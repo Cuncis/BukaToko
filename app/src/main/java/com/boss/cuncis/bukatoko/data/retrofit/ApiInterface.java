@@ -1,19 +1,24 @@
 package com.boss.cuncis.bukatoko.data.retrofit;
 
+import com.boss.cuncis.bukatoko.data.model.Upload;
 import com.boss.cuncis.bukatoko.data.model.rajaongkir.City;
 import com.boss.cuncis.bukatoko.data.model.rajaongkir.Cost;
 import com.boss.cuncis.bukatoko.data.model.Detail;
 import com.boss.cuncis.bukatoko.data.model.Product;
 import com.boss.cuncis.bukatoko.data.model.User;
+import com.boss.cuncis.bukatoko.data.model.transaction.TransDetail;
 import com.boss.cuncis.bukatoko.data.model.transaction.TransPost;
 import com.boss.cuncis.bukatoko.data.model.transaction.TransUser;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -46,11 +51,24 @@ public interface ApiInterface {
     @POST("transaction")
     Call<TransPost> insertTrans(@Body TransPost transPost);
 
-    @GET("transaction-user/{id}/unpaid")
+    @GET("transaction/{code}")
+    Call<TransDetail> getTransDetail(@Path("code") String code);
+
+    @GET("transaction-user/{id}/waiting")
     Call<TransUser> getTransUnpaid(@Path("id") String id);
+
+//    @GET("transaction-user/{id}/unpaid")
+//    Call<TransUser> getTransUnpaid(@Path("id") String id);
 
     @GET("transaction-user/{id}/paid")
     Call<TransUser> getTransPaid(@Path("id") String id);
+
+    @Multipart  // untuk file
+    @POST("upload/{code}")
+    Call<Upload> uploadImage(
+            @Path("code") String code,
+            @Part MultipartBody.Part file
+    );
 
     // Raja ongkir - end Point
 

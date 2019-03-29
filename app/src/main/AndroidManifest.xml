@@ -4,6 +4,8 @@
     package="com.boss.cuncis.bukatoko">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".App"
@@ -13,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.TransActivity"></activity>
+        <activity android:name=".activity.TransDetailActivity"></activity>
+        <activity android:name=".activity.UploadActivity" />
+        <activity android:name=".activity.TransActivity" />
         <activity
             android:name=".activity.CityActivity"
             android:theme="@style/AppTheme.NoActionBar" />
