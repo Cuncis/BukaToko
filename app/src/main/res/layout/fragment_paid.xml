@@ -3,13 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.trans.PaidFragment">
+    tools:context=".fragment.trans.PaidFragment"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Sudah Dibayar"
-        android:gravity="center"/>
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerview_transPaid"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/textView"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:text="@string/no_data"
+            android:gravity="center"
+            android:textColor="@color/colorBackgroundText"/>
+    </RelativeLayout>
 
 </FrameLayout>

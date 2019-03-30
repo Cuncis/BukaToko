@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.boss.cuncis.bukatoko.App;
 import com.boss.cuncis.bukatoko.R;
-import com.boss.cuncis.bukatoko.adapter.TransAdapter;
+import com.boss.cuncis.bukatoko.adapter.TransUnpaidAdapter;
 import com.boss.cuncis.bukatoko.data.db.PrefsManager;
 import com.boss.cuncis.bukatoko.data.model.transaction.TransUser;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
@@ -63,7 +63,7 @@ public class UnpaidFragment extends Fragment {
                     TransUser transUser = response.body();
                     List<TransUser.Data> data = transUser.getData();
 
-                    recyclerView.setAdapter(new TransAdapter(data, getActivity()));
+                    recyclerView.setAdapter(new TransUnpaidAdapter(data, getActivity()));
                 } else {
                     textView.setVisibility(View.VISIBLE);
                 }

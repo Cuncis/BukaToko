@@ -57,11 +57,14 @@ public interface ApiInterface {
     @GET("transaction-user/{id}/waiting")
     Call<TransUser> getTransUnpaid(@Path("id") String id);
 
+    @GET("transaction-user/{id}/waiting")
+    Call<TransUser> getTransPaid(@Path("id") String id);
+
 //    @GET("transaction-user/{id}/unpaid")
 //    Call<TransUser> getTransUnpaid(@Path("id") String id);
 
-    @GET("transaction-user/{id}/paid")
-    Call<TransUser> getTransPaid(@Path("id") String id);
+//    @GET("transaction-user/{id}/paid")
+//    Call<TransUser> getTransPaid(@Path("id") String id);
 
     @Multipart  // untuk file
     @POST("upload/{code}")

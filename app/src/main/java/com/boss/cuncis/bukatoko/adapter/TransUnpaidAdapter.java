@@ -18,12 +18,12 @@ import com.boss.cuncis.bukatoko.data.model.transaction.TransUser;
 
 import java.util.List;
 
-public class TransAdapter extends RecyclerView.Adapter<TransAdapter.TransHolder> {
+public class TransUnpaidAdapter extends RecyclerView.Adapter<TransUnpaidAdapter.TransHolder> {
 
     private List<TransUser.Data> transUnpaid;
     private Context context;
 
-    public TransAdapter(List<TransUser.Data> transUnpaid, Context context) {
+    public TransUnpaidAdapter(List<TransUser.Data> transUnpaid, Context context) {
         this.transUnpaid = transUnpaid;
         this.context = context;
     }

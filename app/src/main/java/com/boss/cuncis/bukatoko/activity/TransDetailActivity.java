@@ -2,6 +2,7 @@ package com.boss.cuncis.bukatoko.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -14,9 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.boss.cuncis.bukatoko.R;
+import com.boss.cuncis.bukatoko.adapter.TransDetailAdapter;
 import com.boss.cuncis.bukatoko.data.model.transaction.TransDetail;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiClient;
 import com.boss.cuncis.bukatoko.data.retrofit.ApiInterface;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,6 +62,8 @@ public class TransDetailActivity extends AppCompatActivity {
 
         linearTagihan = findViewById(R.id.linearTagihan);
         linearPengiriman = findViewById(R.id.linearPengiriman);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         switchTagihan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -120,6 +126,13 @@ public class TransDetailActivity extends AppCompatActivity {
                     } else {
                         btnTrack.setVisibility(View.GONE);
                     }
+
+                    List<TransDetail.Data.DetailTransaction> transactions = data.getDetail_transaction();
+                    TransDetailAdapter adapter = new TransDetailAdapter(transactions, TransDetailActivity.this);
+                    recyclerView.setAdapter(adapter);
+
+                    progressBar.setVisibility(View.GONE);
+
                 } else {
                     Toast.makeText(TransDetailActivity.this, "Error TransDetail: " + response.message(), Toast.LENGTH_SHORT).show();
                     Log.d("_LogTransDetail", "onResponse: " + response.message() + " - " + response.isSuccessful());
